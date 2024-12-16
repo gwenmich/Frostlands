@@ -1,10 +1,11 @@
 import pygame,sys
+from settings import *
 
 class Game:
 
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((700, 500))
+        self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Frostlands")
         self.clock = pygame.time.Clock()
 
@@ -18,7 +19,7 @@ class Game:
 
             self.screen.fill("gold")
             pygame.display.update()
-            self.clock.tick(60)
+            self.clock.tick(FPS)
 
 
 

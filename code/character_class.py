@@ -1,10 +1,13 @@
 import pygame
+from networkx.utils.misc import groups
 
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self):
-
+    def __init__(self, position, group):
+        super().__init__(group)
+        self.image = pygame.image.load("../assets/snowman.svg").convert_alpha()
+        self.rect = self.image.get_rect(topleft = position)
         self.direction = pygame.math.Vector2()
 
     def key_input(self):
@@ -23,3 +26,7 @@ class Player(pygame.sprite.Sprite):
             self.direction.x += 1
         else:
             self.direction.x = 0
+
+
+    def update(self):
+        self.key_input()
