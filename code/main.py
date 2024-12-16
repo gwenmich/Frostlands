@@ -1,5 +1,6 @@
 import pygame,sys
 from settings import *
+from character_class import Player
 
 class Game:
 
