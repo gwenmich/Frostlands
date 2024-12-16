@@ -1,29 +1,25 @@
 import pygame
-from abc import ABC, abstractmethod
-
-class Character(ABC):
-
-    def __init__(self, name, max_health):
-        self.name = name
-        self.health = max_health
-        self.max_health = max_health
-
-    @abstractmethod
-    def move(self):
-        pass
 
 
+class Player(pygame.sprite.Sprite):
 
-class Player(Character):
+    def __init__(self):
 
-    def move(self):
+        self.direction = pygame.math.Vector2()
+
+    def key_input(self):
         keys = pygame.key.get_pressed()
 
         if keys[pygame.K_UP]:
-            pass
-        if keys[pygame.K_DOWN]:
-            pass
+            self.direction.y -= 1
+        elif keys[pygame.K_DOWN]:
+            self.direction.y += 1
+        else:
+            self.direction.y = 0
+
         if keys[pygame.K_LEFT]:
-            pass
-        if keys[pygame.K_RIGHT]:
-            pass
+            self.direction.x -= 1
+        elif keys[pygame.K_RIGHT]:
+            self.direction.x += 1
+        else:
+            self.direction.x = 0
