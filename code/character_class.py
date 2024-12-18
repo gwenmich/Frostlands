@@ -5,7 +5,7 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, position, groups):
         super().__init__(groups)
-        self.image = pygame.image.load("../assets/snowman.svg").convert_alpha()
+        self.image = pygame.image.load("../assets/player.svg").convert_alpha()
         self.rect = self.image.get_rect(topleft = position)
         self.direction = pygame.math.Vector2()
 
