@@ -1,6 +1,7 @@
 import pygame,sys
 from settings import *
 from character_class import Player
+from level_class import Level
 
 class Game:
 
@@ -10,6 +11,8 @@ class Game:
         pygame.display.set_caption("Frostlands")
         self.clock = pygame.time.Clock()
 
+        self.level = Level()
+
     def run(self):
         while True:
 
@@ -18,7 +21,8 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-            self.screen.fill("gold")
+            self.screen.fill((225, 250, 165))
+            self.level.run()
             pygame.display.update()
             self.clock.tick(FPS)
 
