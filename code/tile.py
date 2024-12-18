@@ -8,9 +8,8 @@ class Tile(pygame.sprite.Sprite):
         self.image = self.get_tile(tileset, column, row)
         self.rect = self.image.get_rect(topleft=position)
 
-    def get_tile(self, tileset_path, column, row):
-        # tileset = pygame.image.load(tileset_path).convert_alpha()
+    def get_tile(self, tileset, column, row):
         x = column * TILESIZE
         y = row * TILESIZE
         rect = pygame.Rect(x, y, TILESIZE, TILESIZE)
-        return tileset_path.subsurface(rect)
+        return tileset.subsurface(rect)

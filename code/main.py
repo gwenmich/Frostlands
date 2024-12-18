@@ -21,7 +21,7 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
-            self.screen.fill("gold")
+            self.screen.fill((225, 250, 165))
             self.level.run()
             pygame.display.update()
             self.clock.tick(FPS)
