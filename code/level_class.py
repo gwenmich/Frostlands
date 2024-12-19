@@ -12,6 +12,7 @@ class Level:
         self.sprites = pygame.sprite.Group()
         self.obstacles = pygame.sprite.Group()
 
+        self.tileset_1 = pygame.image.load("../assets/Tileset_1.png").convert_alpha()
         self.tileset_2 = pygame.image.load("../assets/Tileset_2.png").convert_alpha()
         self.tileset_3 = pygame.image.load("../assets/Tileset_3.png").convert_alpha()
         self.draw_map()
@@ -25,6 +26,10 @@ class Level:
                     Tile((x,y), self.tileset_2, 0, 2, [self.sprites])
                 if column == "p":
                     Player((x, y), [self.sprites])
+                if column == "t":
+                    Tile((x,y), self.tileset_1, 0, 16, [self.sprites])
+                if column == "d":
+                    Tile((x,y), self.tileset_1, 5, 16, [self.sprites])
 
 
     def run(self):

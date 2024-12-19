@@ -12,4 +12,6 @@ class Tile(pygame.sprite.Sprite):
         x = column * TILESIZE
         y = row * TILESIZE
         rect = pygame.Rect(x, y, TILESIZE, TILESIZE)
-        return tileset.subsurface(rect)
+        tile = tileset.subsurface(rect)
+        bigger_tile = pygame.transform.scale(tile,(2 * TILESIZE, 2 * TILESIZE))
+        return bigger_tile
