@@ -9,7 +9,7 @@ class Level:
 
         self.display = pygame.display.get_surface()
         # sprites (character, enemies, obstacles and map) and obstacles (anything that can collide with the player)
-        self.sprites = pygame.sprite.Group()
+        self.sprites = YAxisCameraGroup()
         self.obstacles = pygame.sprite.Group()
 
         self.tileset_1 = pygame.image.load("../assets/Tileset_1.png").convert_alpha()
@@ -30,9 +30,29 @@ class Level:
 
 
     def run(self):
-        self.sprites.draw(self.display)
+        self.sprites.custom_draw(self.player)
         self.sprites.update()
 
+
+
+
+class YAxisCameraGroup(pygame.sprite.Group):
+
+    def __init__(self):
+        super().__init__()
+        self.display = pygame.display.get_surface()
+        self.half_width = self.display.get_size()[0] // 2
+        self.half_height = self.display.get_size()[1] // 2
+        self.offset = pygame.math.Vector2()
+
+    def camera_draw(self, player):
+
+        self.offset.x = player.rect.centerx - self.half_width
+        self.offset.y = player.rect.centery - self.half_height
+
+        for sprite in self.sprites():
+            camera_adjusted_rect = sprite.rect.topleft - self.offset
+            self.display.blit(sprite.image, camera_adjusted_rect)
 
 
 
