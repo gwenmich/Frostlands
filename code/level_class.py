@@ -25,7 +25,7 @@ class Level:
                 if column == "w":
                     Tile((x,y), self.tileset_2, 0, 2, [self.sprites, self.obstacles])
                 if column == "p":
-                    self.player = Player((x, y), [self.sprites])
+                    self.player = Player((x, y), [self.sprites], self.obstacles)
 
 
 

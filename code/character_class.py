@@ -5,12 +5,14 @@ from settings import *
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, position, groups):
+    def __init__(self, position, groups, obstacles):
         super().__init__(groups)
         self.image = pygame.image.load("../assets/player.png").convert_alpha()
         self.rect = self.image.get_rect(topleft = position)
         self.direction = pygame.math.Vector2()
         self.speed = 5
+
+        self.obstacles = obstacles
 
     def key_input(self):
         keys = pygame.key.get_pressed()
@@ -32,8 +34,29 @@ class Player(pygame.sprite.Sprite):
     def move(self, speed):
         if self.direction.magnitude() != 0:
             self.direction = self.direction.normalize()
-        self.rect.center += self.direction * speed
 
+        self.rect.x += self.direction.x * speed
+        self.collide("horizontal")
+        self.rect.y += self.direction.y * speed
+        self.collide("vertical")
+        # self.rect.center += self.direction * speed
+
+    def collide(self, direction):
+        if direction == "horizontal":
+            for obstacle in self.obstacles:
+                if obstacle.rect.colliderect(self.rect):
+                    if self.direction.x > 0: # moving right
+                        self.rect.right = obstacle.rect.left
+                    if self.direction.x < 0: # moving left
+                        self.rect.left = obstacle.rect.right
+
+        if direction == "vertical":
+            for obstacle in self.obstacles:
+                if obstacle.rect.colliderect(self.rect):
+                    if self.direction.y > 0:  # moving down
+                        self.rect.bottom = obstacle.rect.top
+                    if self.direction.y < 0:  # moving up
+                        self.rect.top = obstacle.rect.bottom
 
     def update(self):
         self.key_input()
