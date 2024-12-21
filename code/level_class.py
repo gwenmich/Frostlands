@@ -23,17 +23,15 @@ class Level:
                 x = column_index * TILESIZE
                 y = row_index * TILESIZE
                 if column == "w":
-                    Tile((x,y), self.tileset_2, 0, 2, [self.sprites])
+                    Tile((x,y), self.tileset_2, 0, 2, [self.sprites, self.obstacles])
                 if column == "p":
-                    Player((x, y), [self.sprites])
-                if column == "t":
-                    Tile((x,y), self.tileset_1, 0, 16, [self.sprites])
-                if column == "d":
-                    Tile((x,y), self.tileset_1, 5, 16, [self.sprites])
+                    self.player = Player((x, y), [self.sprites])
+
 
 
     def run(self):
         self.sprites.draw(self.display)
+        self.sprites.update()
 
 
 
