@@ -18,14 +18,19 @@ class Level:
         self.draw_map()
 
     def draw_map(self):
-        for row_index, row in enumerate(WORLD_MAP):
-            for column_index, column in enumerate(row):
-                x = column_index * TILESIZE
-                y = row_index * TILESIZE
-                if column == "w":
-                    Tile((x,y), self.tileset_2, 0, 2, [self.sprites, self.obstacles])
-                if column == "p":
-                    self.player = Player((x, y), [self.sprites], self.obstacles)
+
+        map_layout = {
+            "boundaries" : import_csv_layout("../assets/csv_map_files/map_blocks.csv")
+        }
+        # for row_index, row in enumerate(WORLD_MAP):
+        #     for column_index, column in enumerate(row):
+        #         x = column_index * TILESIZE
+        #         y = row_index * TILESIZE
+        #         if column == "w":
+        #             Tile((x,y), self.tileset_2, 0, 2, [self.sprites, self.obstacles])
+        #         if column == "p":
+        #             self.player = Player((x, y), [self.sprites], self.obstacles)
+        self.player = Player((510, 440), [self.sprites], self.obstacles)
 
 
 
@@ -58,8 +63,8 @@ class YAxisCameraGroup(pygame.sprite.Group):
         self.display.blit(self.floor_surface, floor_adjusted_rect)
 
         for sprite in sorted(self.sprites(), key = lambda sprite: sprite.rect.centery):
-            camera_adjusted_rect = sprite.rect.topleft - self.offset
-            self.display.blit(sprite.image, camera_adjusted_rect)
+            sprite_adjusted_rect = sprite.rect.topleft - self.offset
+            self.display.blit(sprite.image, sprite_adjusted_rect)
 
 
 
