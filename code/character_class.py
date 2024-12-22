@@ -9,6 +9,8 @@ class Player(pygame.sprite.Sprite):
         super().__init__(groups)
         self.image = pygame.image.load("../assets/player.png").convert_alpha()
         self.rect = self.image.get_rect(topleft = position)
+        self.hitbox = self.rect.inflate(0, -20)
+
         self.direction = pygame.math.Vector2()
         self.speed = 5
 
@@ -35,28 +37,28 @@ class Player(pygame.sprite.Sprite):
         if self.direction.magnitude() != 0:
             self.direction = self.direction.normalize()
 
-        self.rect.x += self.direction.x * speed
+        self.hitbox.x += self.direction.x * speed
         self.collide("horizontal")
-        self.rect.y += self.direction.y * speed
+        self.hitbox.y += self.direction.y * speed
         self.collide("vertical")
-        # self.rect.center += self.direction * speed
+        self.rect.center = self.hitbox.center
 
     def collide(self, direction):
         if direction == "horizontal":
             for obstacle in self.obstacles:
-                if obstacle.rect.colliderect(self.rect):
+                if obstacle.hitbox.colliderect(self.hitbox):
                     if self.direction.x > 0: # moving right
-                        self.rect.right = obstacle.rect.left
+                        self.hitbox.right = obstacle.hitbox.left
                     if self.direction.x < 0: # moving left
-                        self.rect.left = obstacle.rect.right
+                        self.hitbox.left = obstacle.hitbox.right
 
         if direction == "vertical":
             for obstacle in self.obstacles:
-                if obstacle.rect.colliderect(self.rect):
+                if obstacle.hitbox.colliderect(self.hitbox):
                     if self.direction.y > 0:  # moving down
-                        self.rect.bottom = obstacle.rect.top
+                        self.hitbox.bottom = obstacle.hitbox.top
                     if self.direction.y < 0:  # moving up
-                        self.rect.top = obstacle.rect.bottom
+                        self.hitbox.top = obstacle.hitbox.bottom
 
     def update(self):
         self.key_input()

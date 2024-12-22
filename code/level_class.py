@@ -30,7 +30,7 @@ class Level:
 
 
     def run(self):
-        self.sprites.custom_draw(self.player)
+        self.sprites.camera_draw(self.player)
         self.sprites.update()
 
 
@@ -50,7 +50,7 @@ class YAxisCameraGroup(pygame.sprite.Group):
         self.offset.x = player.rect.centerx - self.half_width
         self.offset.y = player.rect.centery - self.half_height
 
-        for sprite in self.sprites():
+        for sprite in sorted(self.sprites(), key = lambda sprite: sprite.rect.centery):
             camera_adjusted_rect = sprite.rect.topleft - self.offset
             self.display.blit(sprite.image, camera_adjusted_rect)
 

@@ -7,6 +7,7 @@ class Tile(pygame.sprite.Sprite):
         super().__init__(groups)
         self.image = self.get_tile(tileset, column, row)
         self.rect = self.image.get_rect(topleft=position)
+        self.hitbox = self.rect.inflate(0, -10)
 
     def get_tile(self, tileset, column, row):
         x = column * TILESIZE
