@@ -2,6 +2,7 @@ import pygame.display
 from settings import *
 from tile import Tile
 from character_class import Player
+from csv_file_conversion import import_csv_layout, import_folder
 
 class Level:
 
@@ -20,12 +21,27 @@ class Level:
     def draw_map(self):
 
         map_layout = {
-            "boundaries" : import_csv_layout("../assets/csv_map_files/map_blocks.csv")
+            "boundaries" : import_csv_layout("../assets/csv_map_files/map_blocks.csv"),
+            "object" : import_csv_layout("../assets/csv_map_files/map_objects.csv")
         }
-        # for row_index, row in enumerate(WORLD_MAP):
-        #     for column_index, column in enumerate(row):
-        #         x = column_index * TILESIZE
-        #         y = row_index * TILESIZE
+
+        graphics = {
+            "objects" : import_folder("../assets/objects")
+        }
+
+
+        for layer, layout in map_layout.items():
+            for row_index, row in enumerate(layout):
+                for column_index, column in enumerate(row):
+                    if column != "-1":
+                        x = column_index * TILESIZE
+                        y = row_index * TILESIZE
+                        if layer == "boundaries":
+                            Tile((x,y), [self.obstacles], "invisible")
+                        if layer == "objects":
+                            surface = graphics["objects"][int(column)]
+                            Tile((x, y), [self.sprites, self.obstacles], "object", surface)
+
         #         if column == "w":
         #             Tile((x,y), self.tileset_2, 0, 2, [self.sprites, self.obstacles])
         #         if column == "p":
