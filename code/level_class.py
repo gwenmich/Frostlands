@@ -45,10 +45,17 @@ class YAxisCameraGroup(pygame.sprite.Group):
         self.half_height = self.display.get_size()[1] // 2
         self.offset = pygame.math.Vector2()
 
+        # floor
+        self.floor_surface = pygame.image.load("../assets/map.png").convert()
+        self.floor_rect = self.floor_surface.get_rect(topleft = (0,0))
+
     def camera_draw(self, player):
 
         self.offset.x = player.rect.centerx - self.half_width
         self.offset.y = player.rect.centery - self.half_height
+
+        floor_adjusted_rect = self.floor_rect.topleft - self.offset
+        self.display.blit(self.floor_surface, floor_adjusted_rect)
 
         for sprite in sorted(self.sprites(), key = lambda sprite: sprite.rect.centery):
             camera_adjusted_rect = sprite.rect.topleft - self.offset
