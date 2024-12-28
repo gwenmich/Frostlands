@@ -12,11 +12,13 @@ class Level:
         # sprites (character, enemies, obstacles and map) and obstacles (anything that can collide with the player)
         self.sprites = YAxisCameraGroup()
         self.obstacles = pygame.sprite.Group()
+        self.music_playing = False
 
         self.tileset_1 = pygame.image.load("assets/Tileset_1.png").convert_alpha()
         self.tileset_2 = pygame.image.load("assets/Tileset_2.png").convert_alpha()
         self.tileset_3 = pygame.image.load("assets/Tileset_3.png").convert_alpha()
         self.draw_map()
+        self.play_music()
 
     def draw_map(self):
 
@@ -79,6 +81,13 @@ class Level:
     def run(self):
         self.sprites.camera_draw(self.player)
         self.sprites.update()
+
+
+    def play_music(self):
+        if not self.music_playing:
+            pygame.mixer.music.load("music/open-fields-aaron-paul-low-main-version-25198-02-16.mp3")
+            pygame.mixer.music.play(-1)
+            self.music_playing = True
 
 
 
