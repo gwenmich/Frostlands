@@ -13,20 +13,27 @@ class Level:
         self.sprites = YAxisCameraGroup()
         self.obstacles = pygame.sprite.Group()
 
-        self.tileset_1 = pygame.image.load("../assets/Tileset_1.png").convert_alpha()
-        self.tileset_2 = pygame.image.load("../assets/Tileset_2.png").convert_alpha()
-        self.tileset_3 = pygame.image.load("../assets/Tileset_3.png").convert_alpha()
+        self.tileset_1 = pygame.image.load("assets/Tileset_1.png").convert_alpha()
+        self.tileset_2 = pygame.image.load("assets/Tileset_2.png").convert_alpha()
+        self.tileset_3 = pygame.image.load("assets/Tileset_3.png").convert_alpha()
         self.draw_map()
 
     def draw_map(self):
 
         map_layout = {
-            "boundaries" : import_csv_layout("../assets/csv_map_files/map_blocks.csv"),
-            "object" : import_csv_layout("../assets/csv_map_files/map_objects.csv")
+            "boundaries" : import_csv_layout("assets/csv_map_files/map_blocks.csv"),
+            "small_object" : import_csv_layout("assets/csv_map_files/map_small_objects.csv"),
+            "medium_object" : import_csv_layout("assets/csv_map_files/map_medium_objects.csv"),
+            "large_object": import_csv_layout("assets/csv_map_files/map_large_objects.csv"),
+            "tent": import_csv_layout("assets/csv_map_files/map_tent.csv")
         }
 
         graphics = {
-            "objects" : import_folder("../assets/objects")
+            "small_objects" : import_folder("assets/small_obj"),
+            "medium_objects" : import_folder("assets/med_obj"),
+            "large_objects" : import_folder("assets/large_obj"),
+            "tents": import_folder("assets/tent")
+
         }
 
 
@@ -38,14 +45,33 @@ class Level:
                         y = row_index * TILESIZE
                         if layer == "boundaries":
                             Tile((x,y), [self.obstacles], "invisible")
-                        if layer == "objects":
-                            surface = graphics["objects"][int(column)]
-                            Tile((x, y), [self.sprites, self.obstacles], "object", surface)
 
-        #         if column == "w":
-        #             Tile((x,y), self.tileset_2, 0, 2, [self.sprites, self.obstacles])
-        #         if column == "p":
-        #             self.player = Player((x, y), [self.sprites], self.obstacles)
+                        if layer == "small_object":
+                            object_index = int(column)
+                            if 0 <= object_index < len(graphics["small_objects"]):
+                                # (graphics)["objects"][int(column)]
+                                Tile((x, y),[self.sprites, self.obstacles], "object",
+                                     graphics["small_objects"][object_index])
+
+                        if layer == "medium_object":
+                            object_index = int(column)
+                            if 0 <= object_index < len(graphics["medium_objects"]):
+                                Tile((x, y),[self.sprites, self.obstacles], "object",
+                                     graphics["medium_objects"][object_index])
+
+                        if layer == "large_object":
+                            object_index = int(column)
+                            if 0 <= object_index < len(graphics["large_objects"]):
+                                Tile((x, y), [self.sprites, self.obstacles], "object",
+                                     graphics["large_objects"][object_index])
+
+                        if layer == "tent":
+                            object_index = int(column)
+                            if 0 <= object_index < len(graphics["tents"]):
+                                Tile((x, y), [self.sprites, self.obstacles], "object",
+                                     graphics["tents"][object_index])
+
+
         self.player = Player((510, 440), [self.sprites], self.obstacles)
 
 
@@ -67,7 +93,7 @@ class YAxisCameraGroup(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
 
         # floor
-        self.floor_surface = pygame.image.load("../assets/map.png").convert()
+        self.floor_surface = pygame.image.load("assets/map.png").convert()
         self.floor_rect = self.floor_surface.get_rect(topleft = (0,0))
 
     def camera_draw(self, player):
