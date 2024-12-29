@@ -13,6 +13,8 @@ class Player(pygame.sprite.Sprite):
 
         self.import_spritesheet()
         self.status = "down"
+        self.frame = 0
+        self.animation_speed = 0.2
 
         self.direction = pygame.math.Vector2()
         self.speed = 5
@@ -24,7 +26,7 @@ class Player(pygame.sprite.Sprite):
 
 
     def import_spritesheet(self):
-        character_path = []
+        # character_path = []
         self.animations = {
             "up" : [], "down" : [], "left" : [], "right" : [],
             "up_idle" : [], "down_idle" : [], "left_idle" : [], "right_idle" : [],
@@ -49,8 +51,8 @@ class Player(pygame.sprite.Sprite):
     def load_frames(self, spritesheet_image, frames, animation):
         """Adds frames from spritesheet into animation list for animation loop"""
         for frame in range(frames):
-            frame_image = pygame.Surface((TILESIZE, TILESIZE)).convert_alpha()
-            frame_image.blit(spritesheet_image, (0, 0), ((frame * TILESIZE), 0, TILESIZE, TILESIZE))
+            frame_image = pygame.Surface((2 * TILESIZE, 2 * TILESIZE)).convert_alpha()
+            frame_image.blit(spritesheet_image, (0, 0), ((frame * 2 * TILESIZE), 0, 2 * TILESIZE, 2 * TILESIZE))
             frame_image.set_colorkey("black")
             self.animations[animation].append(frame_image)
 
@@ -83,7 +85,6 @@ class Player(pygame.sprite.Sprite):
         if keys[pygame.K_SPACE] and not self.attack:
             self.attack = True
             self.attack_time = pygame.time.get_ticks()
-            print("attack")
 
 
     def get_status(self):
@@ -92,7 +93,7 @@ class Player(pygame.sprite.Sprite):
             if not "idle" in self.status and not "attack" in self.status:
                 self.status = self.status + "_idle"
 
-        # attach state
+        # attack state
         if self.attack:
             self.direction.x = 0
             self.direction.y = 0
@@ -143,8 +144,19 @@ class Player(pygame.sprite.Sprite):
                 self.attack = False
 
 
+    def animate_player(self):
+        animation = self.animations[self.status]
+        self.frame += self.animation_speed
+        if self.frame >= len(animation):
+            self.frame = 0
+
+        self.image = animation[int(self.frame)]
+        self.rect = self.image.get_rect(center = self.hitbox.center)
+
+
     def update(self):
         self.key_input()
         self.cooldown()
         self.get_status()
+        self.animate_player()
         self.move(self.speed)
