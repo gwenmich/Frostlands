@@ -17,7 +17,8 @@ def import_folder(path):
 
     for _,__,img_files in walk(path):
         for img in img_files:
-            img_path = os.path.join(path, img)
+            img_path = path + "/" + img
+            # img_path = os.path.join(path, img)
             print(img_path)
             img_surf = pygame.image.load(img_path).convert_alpha()
             surface_list.append(img_surf)

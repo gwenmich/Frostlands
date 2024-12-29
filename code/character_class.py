@@ -13,8 +13,45 @@ class Player(pygame.sprite.Sprite):
 
         self.direction = pygame.math.Vector2()
         self.speed = 5
+        self.attack = False
+        self.attack_cooldown = 400
+        self.attack_time = None
 
         self.obstacles = obstacles
+
+
+    def import_spritesheet(self):
+        character_path = []
+        self.animations = {
+            "up" : [], "down" : [], "left" : [], "right" : [],
+            "up_idle" : [], "down_idle" : [], "left_idle" : [], "right_idle" : [],
+            "up_attack" : [], "down_attack" : [], "left_attack" : [], "right_attack" : []
+        }
+        # up
+        for animation in self.animations.keys():
+            spritesheet_path = "assets/player/" + animation + ".png"
+            if "idle" in animation:
+                self.load_frames(spritesheet_path, 1, animation)
+            else:
+                self.load_frames(spritesheet_path, 6, animation)
+
+
+
+
+        # self.last_animation_time = pygame.time.get_ticks()
+        # self.animation_cooldown = 300
+        # self.frame = 0
+
+    def load_frames(self, spritesheet_image, frames, animation):
+        """Adds frames from spritesheet into animation list for animation loop"""
+        for frame in range(frames):
+            frame_image = pygame.Surface((TILESIZE, TILESIZE)).convert_alpha()
+            frame_image.blit(spritesheet_image, (0, 0), ((frame * TILESIZE), 0, TILESIZE, TILESIZE))
+            frame_image.set_colorkey("black")
+            self.animations[animation].append(frame_image)
+
+
+
 
     def key_input(self):
         keys = pygame.key.get_pressed()
@@ -32,6 +69,17 @@ class Player(pygame.sprite.Sprite):
             self.direction.x += 1
         else:
             self.direction.x = 0
+
+
+        # attack input
+        if keys[pygame.K_SPACE] and not self.attack:
+            self.attack = True
+            self.attack_time = pygame.time.get_ticks()
+            print("attack")
+
+
+
+
 
     def move(self, speed):
         if self.direction.magnitude() != 0:
@@ -60,6 +108,15 @@ class Player(pygame.sprite.Sprite):
                     if self.direction.y < 0:  # moving up
                         self.hitbox.top = obstacle.hitbox.bottom
 
+
+    def cooldown(self):
+        current_time = pygame.time.get_ticks()
+        if self.attack:
+            if current_time >= self.attack_cooldown:
+                self.attack = False
+
+
     def update(self):
         self.key_input()
+        self.cooldown()
         self.move(self.speed)
