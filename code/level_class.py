@@ -86,6 +86,7 @@ class Level:
     def play_music(self):
         if not self.music_playing:
             pygame.mixer.music.load("music/open-fields-aaron-paul-low-main-version-25198-02-16.mp3")
+            pygame.mixer.music.set_volume(0.2)
             pygame.mixer.music.play(-1)
             self.music_playing = True
 

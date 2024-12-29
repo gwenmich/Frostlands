@@ -89,7 +89,22 @@ class Player(pygame.sprite.Sprite):
     def get_status(self):
         # idle state
         if self.direction.x == 0 and self.direction.y == 0:
-            self.status = self.status + "_idle"
+            if not "idle" in self.status and not "attack" in self.status:
+                self.status = self.status + "_idle"
+
+        # attach state
+        if self.attack:
+            self.direction.x = 0
+            self.direction.y = 0
+            if not "attack" in self.status:
+                if "idle" in self.status:
+                    self.status = self.status.replace("_idle", "_attack")
+                else:
+                    self.status = self.status + "_attack"
+
+        else:
+            if "attack" in self.status:
+                self.status = self.status.replace("_attack", "")
 
 
 
@@ -131,5 +146,5 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.key_input()
         self.cooldown()
-        # self.get_status()
+        self.get_status()
         self.move(self.speed)
