@@ -32,7 +32,8 @@ class Level:
             "small_object" : import_csv_layout("assets/csv_map_files/map_small_objects.csv"),
             "medium_object" : import_csv_layout("assets/csv_map_files/map_medium_objects.csv"),
             "large_object": import_csv_layout("assets/csv_map_files/map_large_objects.csv"),
-            "tent": import_csv_layout("assets/csv_map_files/map_tent.csv")
+            "tent": import_csv_layout("assets/csv_map_files/map_tent.csv"),
+            "entities" : import_csv_layout("assets/csv_map_files/map_entities.csv")
         }
 
         graphics = {
@@ -77,8 +78,17 @@ class Level:
                                 Tile((x, y), [self.sprites, self.obstacles], "object",
                                      graphics["tents"][object_index])
 
+                        if layer == "entities":
+                            if int(column) == 300:
+                                self.player = Player(
+                                    (x, y),
+                                    [self.sprites],
+                                    self.obstacles,
+                                    self.draw_attack,
+                                    self.destroy_snowball)
+                            if int(column) == 230:
+                                pass
 
-        self.player = Player((510, 440), [self.sprites], self.obstacles, self.draw_attack, self.destroy_snowball)
 
     def draw_attack(self):
         self.snowball = Snowball(self.player, [self.sprites])
