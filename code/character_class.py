@@ -1,8 +1,8 @@
 import pygame
 from settings import *
+from entity import Entity
 
-
-class Player(pygame.sprite.Sprite):
+class Player(Entity):
 
     def __init__(self, position, groups, obstacles, draw_attack, destroy_snowball):
         super().__init__(groups)
@@ -107,35 +107,6 @@ class Player(pygame.sprite.Sprite):
                 self.status = self.status.replace("_attack", "")
 
 
-
-    def move(self, speed):
-        if self.direction.magnitude() != 0:
-            self.direction = self.direction.normalize()
-
-        self.hitbox.x += self.direction.x * speed
-        self.collide("horizontal")
-        self.hitbox.y += self.direction.y * speed
-        self.collide("vertical")
-        self.rect.center = self.hitbox.center
-
-    def collide(self, direction):
-        if direction == "horizontal":
-            for obstacle in self.obstacles:
-                if obstacle.hitbox.colliderect(self.hitbox):
-                    if self.direction.x > 0: # moving right
-                        self.hitbox.right = obstacle.hitbox.left
-                    if self.direction.x < 0: # moving left
-                        self.hitbox.left = obstacle.hitbox.right
-
-        if direction == "vertical":
-            for obstacle in self.obstacles:
-                if obstacle.hitbox.colliderect(self.hitbox):
-                    if self.direction.y > 0:  # moving down
-                        self.hitbox.bottom = obstacle.hitbox.top
-                    if self.direction.y < 0:  # moving up
-                        self.hitbox.top = obstacle.hitbox.bottom
-
-
     def cooldown(self):
         current_time = pygame.time.get_ticks()
         if self.attack:
@@ -143,8 +114,6 @@ class Player(pygame.sprite.Sprite):
                 self.attack = False
                 self.animation_speed = 0.2
                 # self.destroy_snowball()
-
-
 
 
     def animate_player(self):
