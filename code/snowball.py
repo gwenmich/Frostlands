@@ -6,7 +6,8 @@ class Snowball(pygame.sprite.Sprite):
         super().__init__(groups)
         direction = player.status.split("_")[0]
         # graphic
-        self.image = pygame.Surface((12,12))
+        self.image = pygame.image.load("assets/snowball.png")
+
         # placement
         if direction == "right":
             self.rect = self.image.get_rect(midleft = player.rect.midright)
@@ -16,5 +17,3 @@ class Snowball(pygame.sprite.Sprite):
             self.rect = self.image.get_rect(midbottom = player.rect.midtop)
         elif direction == "down":
             self.rect = self.image.get_rect(midtop = player.rect.midbottom)
-        else:
-            self.rect = self.image.get_rect(center = player.rect.center)
