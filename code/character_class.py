@@ -138,7 +138,7 @@ class Player(pygame.sprite.Sprite):
         if self.attack:
             if current_time >= self.attack_cooldown:
                 self.attack = False
-                self.animation_speed = 0.2
+                self.animation_speed = 0.7
 
 
     def animate_player(self):
