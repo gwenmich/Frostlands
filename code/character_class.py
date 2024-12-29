@@ -51,7 +51,6 @@ class Player(pygame.sprite.Sprite):
             self.animations[animation].append(frame_image)
 
 
-
     def key_input(self):
         if not self.attack:
             keys = pygame.key.get_pressed()
@@ -74,10 +73,10 @@ class Player(pygame.sprite.Sprite):
             else:
                 self.direction.x = 0
 
-
             # attack input
             if keys[pygame.K_SPACE]:
                 self.attack = True
+                self.animation_speed = 0.6
                 self.attack_time = pygame.time.get_ticks()
 
 
@@ -91,12 +90,11 @@ class Player(pygame.sprite.Sprite):
         if self.attack:
             self.direction.x = 0
             self.direction.y = 0
-            if not "attack" in self.status:
+            if "attack" not in self.status:
                 if "idle" in self.status:
                     self.status = self.status.replace("_idle", "_attack")
                 else:
                     self.status = self.status + "_attack"
-
         else:
             if "attack" in self.status:
                 self.status = self.status.replace("_attack", "")
@@ -136,6 +134,7 @@ class Player(pygame.sprite.Sprite):
         if self.attack:
             if current_time >= self.attack_cooldown:
                 self.attack = False
+                self.animation_speed = 0.2
 
 
     def animate_player(self):
@@ -150,8 +149,7 @@ class Player(pygame.sprite.Sprite):
 
     def update(self):
         self.key_input()
-        self.cooldown()
         self.animate_player()
         self.get_status()
-
+        self.cooldown()
         self.move(self.speed)

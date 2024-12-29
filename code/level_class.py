@@ -51,7 +51,6 @@ class Level:
                         if layer == "small_object":
                             object_index = int(column)
                             if 0 <= object_index < len(graphics["small_objects"]):
-                                # (graphics)["objects"][int(column)]
                                 Tile((x, y),[self.sprites, self.obstacles], "object",
                                      graphics["small_objects"][object_index])
 
