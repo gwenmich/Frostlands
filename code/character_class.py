@@ -5,7 +5,7 @@ from settings import *
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, position, groups, obstacles):
+    def __init__(self, position, groups, obstacles, draw_attack):
         super().__init__(groups)
         self.image = pygame.image.load("assets/player/down_idle.png").convert_alpha()
         self.rect = self.image.get_rect(topleft = position)
@@ -21,6 +21,7 @@ class Player(pygame.sprite.Sprite):
         self.attack = False
         self.attack_cooldown = 400
         self.attack_time = None
+        self.draw_attack = draw_attack
 
         self.obstacles = obstacles
 
@@ -80,6 +81,7 @@ class Player(pygame.sprite.Sprite):
             self.attack = True
             self.animation_speed = 0.6
             self.attack_time = pygame.time.get_ticks()
+            self.draw_attack()
 
 
     def get_status(self):

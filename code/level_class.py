@@ -3,6 +3,7 @@ from settings import *
 from tile import Tile
 from character_class import Player
 from csv_file_conversion import import_csv_layout, import_folder
+from snowball import Snowball
 
 class Level:
 
@@ -73,9 +74,10 @@ class Level:
                                      graphics["tents"][object_index])
 
 
-        self.player = Player((510, 440), [self.sprites], self.obstacles)
+        self.player = Player((510, 440), [self.sprites], self.obstacles, self.draw_attack)
 
-
+    def draw_attack(self):
+        Snowball(self.player, [self.sprites])
 
     def run(self):
         self.sprites.camera_draw(self.player)
