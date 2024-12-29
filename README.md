@@ -1,11 +1,18 @@
-# Frostlands
 
-A top down pixel game with a snowballs theme for a Game Jam on itch.io
+![My Image](assets/logo_text.png)
 
-The game will have a wintry backdrop and the main character will have to fend off the evil snowmen to win the game by
-throwing snowballs at them! 
+**Currently in development until 31/12**
 
-Submissions are until December 31st so repository will be updated regularly
+
+You just arrived at Frostlands! You were left here by your friendly tour guide but he forgot to mention there are 
+evil snowmen lurking on the island! Fortunately for you there's enough snow around to create the deadliest of weapons:
+the Snowball! Rid the lands of the snowmen so you can get to enjoy your holiday in peace.
+
+
+### How to play:
+- Install required libraries and packages as outlined in _requirements.txt_
+- Run _main.py_
+- Hunt down some snowmen!
 
 
 
