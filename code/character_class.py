@@ -52,9 +52,8 @@ class Player(pygame.sprite.Sprite):
 
 
     def key_input(self):
+        keys = pygame.key.get_pressed()
         if not self.attack:
-            keys = pygame.key.get_pressed()
-
             if keys[pygame.K_UP]:
                 self.direction.y -= 1
                 self.status = "up"
@@ -72,12 +71,15 @@ class Player(pygame.sprite.Sprite):
                 self.status = "right"
             else:
                 self.direction.x = 0
+        else:
+            self.direction.x = 0
+            self.direction.y = 0
 
-            # attack input
-            if keys[pygame.K_SPACE]:
-                self.attack = True
-                self.animation_speed = 0.6
-                self.attack_time = pygame.time.get_ticks()
+        # attack input
+        if keys[pygame.K_SPACE] and not self.attack:
+            self.attack = True
+            self.animation_speed = 0.6
+            self.attack_time = pygame.time.get_ticks()
 
 
     def get_status(self):
@@ -148,8 +150,8 @@ class Player(pygame.sprite.Sprite):
 
 
     def update(self):
-        self.key_input()
         self.animate_player()
+        self.key_input()
         self.get_status()
         self.cooldown()
         self.move(self.speed)
