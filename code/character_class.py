@@ -12,10 +12,7 @@ class Player(Entity):
 
         self.import_spritesheet()
         self.status = "down"
-        self.frame = 0
-        self.animation_speed = 0.2
 
-        self.direction = pygame.math.Vector2()
         self.speed = 5
         self.attack = False
         self.attack_cooldown = 400
