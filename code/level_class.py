@@ -5,6 +5,7 @@ from character_class import Player
 from csv_file_conversion import import_csv_layout, import_folder
 from snowball import Snowball
 import time
+from bar import Bar
 
 class Level:
 
@@ -22,6 +23,7 @@ class Level:
         self.tileset_3 = pygame.image.load("assets/Tileset_3.png").convert_alpha()
         self.draw_map()
         self.play_music()
+        self.bar = Bar()
 
     def draw_map(self):
 
@@ -89,6 +91,7 @@ class Level:
     def run(self):
         self.sprites.camera_draw(self.player)
         self.sprites.update()
+        self.bar.display(self.player)
         # self.destroy_snowball()
 
 

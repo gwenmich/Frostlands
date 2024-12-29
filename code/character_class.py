@@ -25,6 +25,9 @@ class Player(pygame.sprite.Sprite):
 
         self.obstacles = obstacles
 
+        self.health = 100
+        self.max_health = 100
+
 
     def import_spritesheet(self):
 
@@ -139,6 +142,7 @@ class Player(pygame.sprite.Sprite):
             if current_time >= self.attack_cooldown:
                 self.attack = False
                 self.animation_speed = 0.2
+                # self.destroy_snowball()
 
 
 
