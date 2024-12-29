@@ -14,10 +14,14 @@ TEXT_COLOUR = "#EEEEEE"
 HEALTH_COLOUR = "green"
 
 
-
-
 snowball = {
     "cooldown" : 100,
     "damage" : 10,
     "graphic" : "assets/snowball.png"
+}
+
+enemy = {
+    "health" : 100,
+    "damage" : 20,
+    "attack_sound" : "assets/music/mixkit-impact-of-a-blow-2150.wav"
 }
