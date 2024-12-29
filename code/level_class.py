@@ -4,6 +4,7 @@ from tile import Tile
 from character_class import Player
 from csv_file_conversion import import_csv_layout, import_folder
 from snowball import Snowball
+import time
 
 class Level:
 
@@ -81,13 +82,14 @@ class Level:
         self.snowball = Snowball(self.player, [self.sprites])
 
     def destroy_snowball(self):
-        if self.snowball:
-            self.snowball.kill()
-        self.snowball = None
+        if self.snowball and time.time() - self.snowball.created_time > self.snowball.lifespan:
+           self.snowball.kill()
+           self.snowball = None
 
     def run(self):
         self.sprites.camera_draw(self.player)
         self.sprites.update()
+        # self.destroy_snowball()
 
 
     def play_music(self):

@@ -2,7 +2,6 @@ import pygame
 from settings import *
 
 
-
 class Player(pygame.sprite.Sprite):
 
     def __init__(self, position, groups, obstacles, draw_attack, destroy_snowball):
@@ -139,8 +138,7 @@ class Player(pygame.sprite.Sprite):
         if self.attack:
             if current_time >= self.attack_cooldown:
                 self.attack = False
-                self.animation_speed = 0.7
-
+                self.animation_speed = 0.2
 
 
 
