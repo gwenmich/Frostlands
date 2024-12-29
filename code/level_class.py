@@ -15,6 +15,7 @@ class Level:
         self.obstacles = pygame.sprite.Group()
         self.music_playing = False
 
+        self.snowball = None
         self.tileset_1 = pygame.image.load("assets/Tileset_1.png").convert_alpha()
         self.tileset_2 = pygame.image.load("assets/Tileset_2.png").convert_alpha()
         self.tileset_3 = pygame.image.load("assets/Tileset_3.png").convert_alpha()
@@ -74,10 +75,15 @@ class Level:
                                      graphics["tents"][object_index])
 
 
-        self.player = Player((510, 440), [self.sprites], self.obstacles, self.draw_attack)
+        self.player = Player((510, 440), [self.sprites], self.obstacles, self.draw_attack, self.destroy_snowball)
 
     def draw_attack(self):
-        Snowball(self.player, [self.sprites])
+        self.snowball = Snowball(self.player, [self.sprites])
+
+    def destroy_snowball(self):
+        if self.snowball:
+            self.snowball.kill()
+        self.snowball = None
 
     def run(self):
         self.sprites.camera_draw(self.player)

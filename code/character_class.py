@@ -5,7 +5,7 @@ from settings import *
 
 class Player(pygame.sprite.Sprite):
 
-    def __init__(self, position, groups, obstacles, draw_attack):
+    def __init__(self, position, groups, obstacles, draw_attack, destroy_snowball):
         super().__init__(groups)
         self.image = pygame.image.load("assets/player/down_idle.png").convert_alpha()
         self.rect = self.image.get_rect(topleft = position)
@@ -22,6 +22,7 @@ class Player(pygame.sprite.Sprite):
         self.attack_cooldown = 400
         self.attack_time = None
         self.draw_attack = draw_attack
+        self.destroy_snowball = destroy_snowball
 
         self.obstacles = obstacles
 
@@ -139,6 +140,9 @@ class Player(pygame.sprite.Sprite):
             if current_time >= self.attack_cooldown:
                 self.attack = False
                 self.animation_speed = 0.7
+
+
+
 
 
     def animate_player(self):
