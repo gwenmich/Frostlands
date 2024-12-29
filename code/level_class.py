@@ -56,27 +56,19 @@ class Level:
 
                         if layer == "small_object":
                             object_index = int(column)
-                            if 0 <= object_index < len(graphics["small_objects"]):
-                                Tile((x, y),[self.sprites, self.obstacles], "object",
-                                     graphics["small_objects"][object_index])
+                            Tile((x, y),[self.sprites, self.obstacles], "object", graphics["small_objects"][object_index])
 
                         if layer == "medium_object":
                             object_index = int(column)
-                            if 0 <= object_index < len(graphics["medium_objects"]):
-                                Tile((x, y),[self.sprites, self.obstacles], "object",
-                                     graphics["medium_objects"][object_index])
+                            Tile((x, y),[self.sprites, self.obstacles], "object", graphics["medium_objects"][object_index])
 
                         if layer == "large_object":
                             object_index = int(column)
-                            if 0 <= object_index < len(graphics["large_objects"]):
-                                Tile((x, y), [self.sprites, self.obstacles], "object",
-                                     graphics["large_objects"][object_index])
+                            Tile((x, y), [self.sprites, self.obstacles], "object", graphics["large_objects"][object_index])
 
                         if layer == "tent":
                             object_index = int(column)
-                            if 0 <= object_index < len(graphics["tents"]):
-                                Tile((x, y), [self.sprites, self.obstacles], "object",
-                                     graphics["tents"][object_index])
+                            Tile((x, y), [self.sprites, self.obstacles], "object", graphics["tents"][object_index])
 
                         if layer == "entities":
                             if int(column) == 300:
