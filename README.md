@@ -1,5 +1,5 @@
 
-![My Image](assets/logo_text.png)
+![Frostlands](assets/logo_text.png)
 
 **Currently in development until 31/12**
 
