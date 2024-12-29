@@ -6,6 +6,7 @@ from csv_file_conversion import import_csv_layout, import_folder
 from snowball import Snowball
 import time
 from bar import Bar
+from enemy import Enemy
 
 class Level:
 
@@ -79,7 +80,7 @@ class Level:
                                     self.draw_attack,
                                     self.destroy_snowball)
                             if int(column) == 230:
-                                pass
+                                self.enemy = Enemy((x,y), [self.sprites])
 
 
     def draw_attack(self):

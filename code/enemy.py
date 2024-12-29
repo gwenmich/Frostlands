@@ -8,5 +8,5 @@ class Enemy(Entity):
         super().__init__(groups)
         self.sprite_type = "enemy"
 
-        self.image = pygame.Surface((64,64))
+        self.image = pygame.image.load(enemy["image"])
         self.rect = self.image.get_rect(topleft = position)
