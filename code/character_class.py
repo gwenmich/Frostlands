@@ -7,9 +7,12 @@ class Player(pygame.sprite.Sprite):
 
     def __init__(self, position, groups, obstacles):
         super().__init__(groups)
-        self.image = pygame.image.load("assets/player.png").convert_alpha()
+        self.image = pygame.image.load("assets/player/down_idle.png").convert_alpha()
         self.rect = self.image.get_rect(topleft = position)
         self.hitbox = self.rect.inflate(0, -20)
+
+        self.import_spritesheet()
+        self.status = "down"
 
         self.direction = pygame.math.Vector2()
         self.speed = 5
@@ -30,12 +33,13 @@ class Player(pygame.sprite.Sprite):
         # up
         for animation in self.animations.keys():
             spritesheet_path = "assets/player/" + animation + ".png"
+            spritesheet_img = pygame.image.load(spritesheet_path).convert_alpha()
             if "idle" in animation:
-                self.load_frames(spritesheet_path, 1, animation)
+                self.load_frames(spritesheet_img, 1, animation)
             else:
-                self.load_frames(spritesheet_path, 6, animation)
+                self.load_frames(spritesheet_img, 6, animation)
 
-
+        print(self.animations)
 
 
         # self.last_animation_time = pygame.time.get_ticks()
@@ -58,15 +62,19 @@ class Player(pygame.sprite.Sprite):
 
         if keys[pygame.K_UP]:
             self.direction.y -= 1
+            self.status = "up"
         elif keys[pygame.K_DOWN]:
             self.direction.y += 1
+            self.status = "down"
         else:
             self.direction.y = 0
 
         if keys[pygame.K_LEFT]:
             self.direction.x -= 1
+            self.status = "left"
         elif keys[pygame.K_RIGHT]:
             self.direction.x += 1
+            self.status = "right"
         else:
             self.direction.x = 0
 
@@ -78,6 +86,10 @@ class Player(pygame.sprite.Sprite):
             print("attack")
 
 
+    def get_status(self):
+        # idle state
+        if self.direction.x == 0 and self.direction.y == 0:
+            self.status = self.status + "_idle"
 
 
 
@@ -119,4 +131,5 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         self.key_input()
         self.cooldown()
+        # self.get_status()
         self.move(self.speed)
