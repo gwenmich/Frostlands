@@ -18,6 +18,9 @@ class Level:
         self.obstacles = pygame.sprite.Group()
         self.music_playing = False
 
+        self.snowball_sprites = pygame.sprite.Group()
+        self.attackable_sprites = pygame.sprite.Group()
+
         self.snowball = None
         self.tileset_1 = pygame.image.load("assets/Tileset_1.png").convert_alpha()
         self.tileset_2 = pygame.image.load("assets/Tileset_2.png").convert_alpha()
@@ -80,23 +83,36 @@ class Level:
                                     self.draw_attack,
                                     self.destroy_snowball)
                             if int(column) == 230:
-                                self.enemy = Enemy((x,y), [self.sprites], self.obstacles)
+                                self.enemy = Enemy(
+                                    (x,y),
+                                    [self.sprites, self.attackable_sprites],
+                                    self.obstacles)
 
 
     def draw_attack(self):
-        self.snowball = Snowball(self.player, [self.sprites])
+        self.snowball = Snowball(self.player, [self.sprites, self.snowball_sprites])
 
     def destroy_snowball(self):
-        if self.snowball and time.time() - self.snowball.created_time > self.snowball.lifespan:
+        if self.snowball and int(time.time() - self.snowball.created_time) > self.snowball.lifespan:
            self.snowball.kill()
            self.snowball = None
+
+
+    def player_attack_logic(self):
+        if self.snowball_sprites:
+            for snow in self.snowball_sprites:
+                collision_sprites = pygame.sprite.spritecollide(snow, self.attackable_sprites, True)
+                if collision_sprites:
+                    for target in collision_sprites:
+                        target.kill()
+
 
     def run(self):
         self.sprites.camera_draw(self.player)
         self.sprites.update()
         self.sprites.enemy_update(self.player)
+        self.player_attack_logic()
         self.bar.display(self.player)
-
         # self.destroy_snowball()
 
 

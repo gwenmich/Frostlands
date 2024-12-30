@@ -28,5 +28,5 @@ enemy = {
     "speed" : 1,
     "resistance" : 3,
     "attack_radius" : 50,
-    "notice_radius" : 300
+    "notice_radius" : 280
 }
