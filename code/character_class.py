@@ -123,7 +123,6 @@ class Player(Entity):
                 self.vulnerable = True
 
 
-
     def animate_player(self):
         animation = self.animations[self.status]
         self.frame += self.animation_speed
@@ -140,9 +139,11 @@ class Player(Entity):
             self.image.set_alpha(255)
 
 
-    def check_player_death(self):
+    def check_player_health(self):
         if self.health <= 0:
-            pass
+            return True
+        else:
+            return False
 
 
     def update(self):

@@ -115,6 +115,12 @@ class Level:
             self.player.get_hit_time = pygame.time.get_ticks()
 
 
+    def victory_screen(self):
+        pass
+
+
+    def game_over_screen(self):
+        pass
 
     def run(self):
         self.sprites.camera_draw(self.player)
@@ -123,7 +129,8 @@ class Level:
         self.destroy_snowball()
         self.player_attack_logic()
         self.bar.display(self.player)
-
+        if self.player.check_player_health():
+            self.game_over_screen()
 
 
     def play_music(self):
