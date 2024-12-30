@@ -85,7 +85,7 @@ class Level:
                             if int(column) == 230:
                                 self.enemy = Enemy(
                                     (x,y),
-                                    [self.sprites, self.snowball_sprites],
+                                    [self.sprites, self.enemy_sprites],
                                     self.obstacles)
 
 

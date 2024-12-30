@@ -56,6 +56,7 @@ class Enemy(Entity):
         if self.status == "attack":
             self.attack_time = pygame.time.get_ticks()
             print("attack")
+            # player.health -= self.damage
             self.can_attack = False
         elif self.status == "move":
             self.direction = self.get_distance_from_player(player)[1]
@@ -63,15 +64,21 @@ class Enemy(Entity):
             self.direction = pygame.math.Vector2()
 
     def cooldown(self):
+        current_time = pygame.time.get_ticks()
         if not self.can_attack:
-            current_time = pygame.time.get_ticks()
             if current_time - self.attack_time >= self.attack_cooldown:
                 self.can_attack = True
 
+        if not self.vulnerable:
+            if current_time - self.hit_time >= self.invincibility_duration:
+                self.vulnerable = True
+
     def get_damage(self, player, attack_type):
         if self.vulnerable:
+            self.direction = self.get_distance_from_player(player)[1]
             if attack_type == "snowball":
                 self.health -= snowball["damage"]
+                # print(f"Enemy health: {self.health}")
 
             self.hit_time = pygame.time.get_ticks()
             self.vulnerable = False
@@ -80,10 +87,16 @@ class Enemy(Entity):
         if self.health <= 0:
             self.kill()
 
+    def attack_pushback(self):
+        if not self.vulnerable:
+            self.direction *= -self.resistance
+
 
     def update(self):
+        self.attack_pushback()
         self.move(self.speed)
         self.cooldown()
+        self.check_death()
 
     def update_enemies(self, player):
         self.set_status(player)
