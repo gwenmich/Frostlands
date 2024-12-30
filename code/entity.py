@@ -1,4 +1,5 @@
 import pygame
+from math import sin
 
 class Entity(pygame.sprite.Sprite):
 
@@ -34,3 +35,10 @@ class Entity(pygame.sprite.Sprite):
                         self.hitbox.bottom = obstacle.hitbox.top
                     if self.direction.y < 0:  # moving up
                         self.hitbox.top = obstacle.hitbox.bottom
+
+    def wave_value_flicker(self):
+        value = sin(pygame.time.get_ticks())
+        if value >= 0:
+            return 255
+        else:
+            return 0

@@ -92,9 +92,19 @@ class Enemy(Entity):
             self.direction *= -self.resistance
 
 
+    def flicker_damage(self):
+        if not self.vulnerable:
+            alpha = self.wave_value_flicker()
+            self.image.set_alpha(alpha)
+        else:
+            self.image.set_alpha(255)
+
+
+
     def update(self):
         self.attack_pushback()
         self.move(self.speed)
+        self.flicker_damage()
         self.cooldown()
         self.check_death()
 
