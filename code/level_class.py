@@ -86,7 +86,8 @@ class Level:
                                 self.enemy = Enemy(
                                     (x,y),
                                     [self.sprites, self.enemy_sprites],
-                                    self.obstacles)
+                                    self.obstacles,
+                                    self.enemy_attack)
 
 
     def draw_attack(self):
@@ -105,6 +106,14 @@ class Level:
                 if collision_sprites:
                     for target in collision_sprites:
                         target.get_damage(self.player, snow.sprite_type)
+
+
+    def enemy_attack(self, amount):
+        if self.player.vulnerable:
+            self.player.health -= amount
+            self.player.vulnerable = False
+            self.player.get_hit_time = pygame.time.get_ticks()
+
 
 
     def run(self):

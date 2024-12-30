@@ -25,6 +25,10 @@ class Player(Entity):
         self.health = 100
         self.max_health = 100
 
+        self.vulnerable = True
+        self.get_hit_time = None
+        self.invulnerability_time = 500
+
 
     def import_spritesheet(self):
 
@@ -79,7 +83,7 @@ class Player(Entity):
         # attack input
         if keys[pygame.K_SPACE] and not self.attack:
             self.attack = True
-            self.animation_speed = 0.5
+            self.animation_speed = 0.3
             self.attack_time = pygame.time.get_ticks()
             self.draw_attack()
 
@@ -110,6 +114,10 @@ class Player(Entity):
             if current_time - self.attack_time >= self.attack_cooldown + snowball["cooldown"]:
                 self.attack = False
                 self.animation_speed = 0.2
+
+        if not self.vulnerable:
+            if current_time - self.get_hit_time >= self.invulnerability_time:
+                self.vulnerable = True
 
 
 

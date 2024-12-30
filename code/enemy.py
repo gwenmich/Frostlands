@@ -4,7 +4,7 @@ from entity import Entity
 
 class Enemy(Entity):
 
-    def __init__(self, position, groups, obstacles):
+    def __init__(self, position, groups, obstacles, enemy_attack):
         super().__init__(groups)
         self.sprite_type = "enemy"
         self.status = "idle"
@@ -24,6 +24,7 @@ class Enemy(Entity):
         self.can_attack = True
         self.attack_time = None
         self.attack_cooldown = 400
+        self.enemy_attack = enemy_attack
 
         self.vulnerable = True
         self.hit_time = None
@@ -52,16 +53,17 @@ class Enemy(Entity):
         else:
             self.status = "idle"
 
+
     def action(self, player):
         if self.status == "attack":
             self.attack_time = pygame.time.get_ticks()
-            print("attack")
-            # player.health -= self.damage
+            self.enemy_attack(self.damage)
             self.can_attack = False
         elif self.status == "move":
             self.direction = self.get_distance_from_player(player)[1]
         else:
             self.direction = pygame.math.Vector2()
+
 
     def cooldown(self):
         current_time = pygame.time.get_ticks()
@@ -73,6 +75,7 @@ class Enemy(Entity):
             if current_time - self.hit_time >= self.invincibility_duration:
                 self.vulnerable = True
 
+
     def get_damage(self, player, attack_type):
         if self.vulnerable:
             self.direction = self.get_distance_from_player(player)[1]
@@ -83,9 +86,11 @@ class Enemy(Entity):
             self.hit_time = pygame.time.get_ticks()
             self.vulnerable = False
 
+
     def check_death(self):
         if self.health <= 0:
             self.kill()
+
 
     def attack_pushback(self):
         if not self.vulnerable:
@@ -100,13 +105,13 @@ class Enemy(Entity):
             self.image.set_alpha(255)
 
 
-
     def update(self):
         self.attack_pushback()
         self.move(self.speed)
         self.flicker_damage()
         self.cooldown()
         self.check_death()
+
 
     def update_enemies(self, player):
         self.set_status(player)
