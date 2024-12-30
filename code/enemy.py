@@ -31,7 +31,7 @@ class Enemy(Entity):
             direction = (player_vector - enemy_vector).normalize()
         else:
             direction = pygame.math.Vector2()
-
+        print(f"Enemy Position: {self.rect.center}, Player Position: {player.rect.center}, Distance: {distance}, Direction: {direction}")
         return (distance, direction)
 
 
@@ -45,8 +45,18 @@ class Enemy(Entity):
         else:
             self.status = "idle"
 
+    def action(self, player):
+        if self.status == "attack":
+            pass
+        elif self.status == "move":
+            self.direction = self.get_distance_from_player(player)[1]
+        else:
+            self.direction = pygame.math.Vector2()
+
+
     def update(self):
         self.move(self.speed)
 
-    def enemy_update(self, player):
+    def update_enemies(self, player):
         self.set_status(player)
+        self.action(player)

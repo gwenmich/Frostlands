@@ -25,7 +25,7 @@ enemy = {
     "damage" : 20,
     "attack_sound" : "assets/music/mixkit-impact-of-a-blow-2150.wav",
     "image" : "assets/snowman1.png",
-    "speed" : 3,
+    "speed" : 1,
     "resistance" : 3,
     "attack_radius" : 50,
     "notice_radius" : 300
