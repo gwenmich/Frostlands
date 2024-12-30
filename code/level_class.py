@@ -19,7 +19,7 @@ class Level:
         self.music_playing = False
 
         self.snowball_sprites = pygame.sprite.Group()
-        self.attackable_sprites = pygame.sprite.Group()
+        self.enemy_sprites = pygame.sprite.Group()
 
         self.snowball = None
         self.tileset_1 = pygame.image.load("assets/Tileset_1.png").convert_alpha()
@@ -85,7 +85,7 @@ class Level:
                             if int(column) == 230:
                                 self.enemy = Enemy(
                                     (x,y),
-                                    [self.sprites, self.attackable_sprites],
+                                    [self.sprites, self.snowball_sprites],
                                     self.obstacles)
 
 
@@ -101,10 +101,10 @@ class Level:
     def player_attack_logic(self):
         if self.snowball_sprites:
             for snow in self.snowball_sprites:
-                collision_sprites = pygame.sprite.spritecollide(snow, self.attackable_sprites, True)
+                collision_sprites = pygame.sprite.spritecollide(snow, self.enemy_sprites, False)
                 if collision_sprites:
                     for target in collision_sprites:
-                        target.kill()
+                        target.get_damage(self.player, snow.sprite_type)
 
 
     def run(self):

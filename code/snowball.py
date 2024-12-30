@@ -8,7 +8,7 @@ class Snowball(pygame.sprite.Sprite):
         direction = player.status.split("_")[0]
         # graphic
         self.image = pygame.image.load("assets/snowball.png")
-
+        self.sprite_type = "snowball"
         # lifespan
         self.created_time = time.time()
         self.lifespan = 2

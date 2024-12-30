@@ -79,7 +79,7 @@ class Player(Entity):
         # attack input
         if keys[pygame.K_SPACE] and not self.attack:
             self.attack = True
-            self.animation_speed = 0.6
+            self.animation_speed = 0.5
             self.attack_time = pygame.time.get_ticks()
             self.draw_attack()
 
@@ -107,7 +107,7 @@ class Player(Entity):
     def cooldown(self):
         current_time = pygame.time.get_ticks()
         if self.attack:
-            if current_time >= self.attack_cooldown:
+            if current_time - self.attack_time >= self.attack_cooldown + snowball["cooldown"]:
                 self.attack = False
                 self.animation_speed = 0.2
                 # self.destroy_snowball()

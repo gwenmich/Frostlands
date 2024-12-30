@@ -25,6 +25,10 @@ class Enemy(Entity):
         self.attack_time = None
         self.attack_cooldown = 400
 
+        self.vulnerable = True
+        self.hit_time = None
+        self.invincibility_duration = 300
+
 
     def get_distance_from_player(self, player):
         enemy_vector = pygame.math.Vector2(self.rect.center)
@@ -63,6 +67,18 @@ class Enemy(Entity):
             current_time = pygame.time.get_ticks()
             if current_time - self.attack_time >= self.attack_cooldown:
                 self.can_attack = True
+
+    def get_damage(self, player, attack_type):
+        if self.vulnerable:
+            if attack_type == "snowball":
+                self.health -= snowball["damage"]
+
+            self.hit_time = pygame.time.get_ticks()
+            self.vulnerable = False
+
+    def check_death(self):
+        if self.health <= 0:
+            self.kill()
 
 
     def update(self):
