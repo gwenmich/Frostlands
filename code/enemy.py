@@ -21,6 +21,10 @@ class Enemy(Entity):
         self.attack_radius = enemy["attack_radius"]
         self.notice_radius = enemy["notice_radius"]
 
+        self.can_attack = True
+        self.attack_time = None
+        self.attack_cooldown = 400
+
 
     def get_distance_from_player(self, player):
         enemy_vector = pygame.math.Vector2(self.rect.center)
@@ -31,14 +35,13 @@ class Enemy(Entity):
             direction = (player_vector - enemy_vector).normalize()
         else:
             direction = pygame.math.Vector2()
-        print(f"Enemy Position: {self.rect.center}, Player Position: {player.rect.center}, Distance: {distance}, Direction: {direction}")
         return (distance, direction)
 
 
     def set_status(self, player):
         distance = self.get_distance_from_player(player)[0]
 
-        if distance <= self.attack_radius:
+        if distance <= self.attack_radius and self.can_attack == True:
             self.status = "attack"
         elif distance <= self.notice_radius:
             self.status = "move"
@@ -47,15 +50,24 @@ class Enemy(Entity):
 
     def action(self, player):
         if self.status == "attack":
-            pass
+            self.attack_time = pygame.time.get_ticks()
+            print("attack")
+            self.can_attack = False
         elif self.status == "move":
             self.direction = self.get_distance_from_player(player)[1]
         else:
             self.direction = pygame.math.Vector2()
 
+    def cooldown(self):
+        if not self.can_attack:
+            current_time = pygame.time.get_ticks()
+            if current_time - self.attack_time >= self.attack_cooldown:
+                self.can_attack = True
+
 
     def update(self):
         self.move(self.speed)
+        self.cooldown()
 
     def update_enemies(self, player):
         self.set_status(player)
