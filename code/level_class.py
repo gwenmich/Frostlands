@@ -7,6 +7,7 @@ from snowball import Snowball
 import time
 from bar import Bar
 from enemy import Enemy
+from screens import VictoryScreen, GameOverScreen
 
 class Level:
 
@@ -115,13 +116,6 @@ class Level:
             self.player.get_hit_time = pygame.time.get_ticks()
 
 
-    def victory_screen(self):
-        pass
-
-
-    def game_over_screen(self):
-        pass
-
     def run(self):
         self.sprites.camera_draw(self.player)
         self.sprites.update()
@@ -129,8 +123,6 @@ class Level:
         self.destroy_snowball()
         self.player_attack_logic()
         self.bar.display(self.player)
-        if self.player.check_player_health():
-            self.game_over_screen()
 
 
     def play_music(self):
@@ -172,5 +164,12 @@ class YAxisCameraGroup(pygame.sprite.Group):
         enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite, "sprite_type") and sprite.sprite_type == "enemy"]
         for enemy in enemy_sprites:
             enemy.update_enemies(player)
+
+    def check_all_enemies_health(self):
+        enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite, "sprite_type") and sprite.sprite_type == "enemy"]
+        if not enemy_sprites:
+            return True
+        else:
+            return False
 
 
