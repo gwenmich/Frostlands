@@ -1,4 +1,4 @@
-import pygame.display
+import pygame
 from settings import *
 from tile import Tile
 from character_class import Player
