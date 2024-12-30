@@ -1,9 +1,4 @@
-
-<div style="background-color: #003366; padding: 20px;">
-<img src="assets/logo_text.png" alt="Frostlands" />
-</div>
-
-
+![Frostlands](assets/logo_text.png)
 
 
 **Currently in development until 31/12**
