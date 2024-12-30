@@ -111,9 +111,10 @@ class Level:
         self.sprites.camera_draw(self.player)
         self.sprites.update()
         self.sprites.enemy_update(self.player)
+        self.destroy_snowball()
         self.player_attack_logic()
         self.bar.display(self.player)
-        # self.destroy_snowball()
+
 
 
     def play_music(self):

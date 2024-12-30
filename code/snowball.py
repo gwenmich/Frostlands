@@ -11,7 +11,7 @@ class Snowball(pygame.sprite.Sprite):
         self.sprite_type = "snowball"
         # lifespan
         self.created_time = time.time()
-        self.lifespan = 2
+        self.lifespan = 0.5
 
         # placement
         if direction == "right":

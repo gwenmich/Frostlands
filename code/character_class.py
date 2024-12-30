@@ -110,7 +110,7 @@ class Player(Entity):
             if current_time - self.attack_time >= self.attack_cooldown + snowball["cooldown"]:
                 self.attack = False
                 self.animation_speed = 0.2
-                # self.destroy_snowball()
+
 
 
     def animate_player(self):
