@@ -80,7 +80,7 @@ class Level:
                                     self.draw_attack,
                                     self.destroy_snowball)
                             if int(column) == 230:
-                                self.enemy = Enemy((x,y), [self.sprites])
+                                self.enemy = Enemy((x,y), [self.sprites], self.obstacles)
 
 
     def draw_attack(self):
@@ -133,6 +133,9 @@ class YAxisCameraGroup(pygame.sprite.Group):
             sprite_adjusted_rect = sprite.rect.topleft - self.offset
             self.display.blit(sprite.image, sprite_adjusted_rect)
 
-
+    def enemy_update(self, player):
+        enemy_sprites = [sprite for sprite in self.sprites() if hasattr(sprite, "sprite_type") and sprite.sprite_type == "enemy"]
+        for enemy in enemy_sprites:
+            enemy.enemy_update(player)
 
 
