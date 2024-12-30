@@ -19,6 +19,8 @@ class Player(Entity):
         self.attack_time = None
         self.draw_attack = draw_attack
         self.destroy_snowball = destroy_snowball
+        self.attack_sound = pygame.mixer.Sound("music/snowball-hit-01-279699.mp3")
+        self.attack_sound.set_volume(0.6)
 
         self.obstacles = obstacles
 
@@ -86,6 +88,7 @@ class Player(Entity):
             self.animation_speed = 0.3
             self.attack_time = pygame.time.get_ticks()
             self.draw_attack()
+            self.attack_sound.play()
 
 
     def get_status(self):
@@ -135,6 +138,11 @@ class Player(Entity):
             self.image.set_alpha(alpha)
         else:
             self.image.set_alpha(255)
+
+
+    def check_player_death(self):
+        if self.health <= 0:
+            pass
 
 
     def update(self):

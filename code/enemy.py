@@ -25,6 +25,8 @@ class Enemy(Entity):
         self.attack_time = None
         self.attack_cooldown = 400
         self.enemy_attack = enemy_attack
+        self.enemy_attack_sound = pygame.mixer.Sound("music/mixkit-impact-of-a-blow-2150.wav")
+        self.enemy_attack_sound.set_volume(0.1)
 
         self.vulnerable = True
         self.hit_time = None
@@ -58,6 +60,7 @@ class Enemy(Entity):
         if self.status == "attack":
             self.attack_time = pygame.time.get_ticks()
             self.enemy_attack(self.damage)
+            self.enemy_attack_sound.play()
             self.can_attack = False
         elif self.status == "move":
             self.direction = self.get_distance_from_player(player)[1]
