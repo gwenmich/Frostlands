@@ -14,9 +14,9 @@ class Game:
         self.font = pygame.font.Font(FONT, FONT_SIZE)
         self.menu_background = pygame.image.load("assets/menu_screen_bg.png")
 
-
         self.level = Level()
         self.running = True
+
 
     def menu_screen(self):
         menu = True
@@ -49,9 +49,18 @@ class Game:
             pygame.display.update()
 
 
+    def render_text(self, text):
+        y_pos = 0
+        for line in text:
+            rendered_line = self.font.render(line, True, TEXT_COLOUR)
+            render_line_rect = rendered_line.get_rect(center=(WIDTH // 2, 200 + y_pos))
+            y_pos += 20
+            self.screen.blit(rendered_line, render_line_rect)
+
+
     def introduction(self):
         intro = True
-        lines = [
+        intro_text = [
             "Welcome to Frostlands!",
             "You were left here by your friendly tour guide",
             "but he forgot to mention there are evil snowmen",
@@ -67,31 +76,61 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
+                    sys.exit()
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
                         intro = False
 
 
             self.screen.blit(self.menu_background, (0, 0))
-            y_pos = 0
-            for line in lines:
-
-                rendered_line = self.font.render(line, True, TEXT_COLOUR)
-                render_line_rect = rendered_line.get_rect(center = (WIDTH // 2, 200 + y_pos))
-                y_pos += 20
-                self.screen.blit(rendered_line, render_line_rect)
-
+            self.render_text(intro_text)
 
             self.clock.tick(FPS)
             pygame.display.update()
 
 
+    def victory(self):
+        win = True
+        win_text = [
+            "Congratulations!",
+            "You have defeated all the snowmen",
+            "and can finally enjoy your holiday",
+            "in peace.",
+            "Good luck!"
+        ]
+
+        while win:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+
+            self.screen.blit(self.menu_background, (0, 0))
+            self.render_text(win_text)
+
+            self.clock.tick(FPS)
+            pygame.display.update()
+
 
     def game_over(self):
-        text = self.font.render("Game Over", True, TEXT_COLOUR)
-        text_rect = text.get_rect(center = (WIDTH // 2, HEIGHT // 2))
+        loss = True
+        loss_text = [
+            "GAME OVER",
+            "The evil snowmen have buried you",
+            "under a pile of snow and are going",
+            "to make you into one of their own!",
+            "Who knew? Carrots suit you"
+        ]
 
-        self.screen.blit(self.menu_background, (0, 0))
+        while loss:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+
+            self.screen.blit(self.menu_background, (0, 0))
+            self.render_text(loss_text)
+
+            self.clock.tick(FPS)
+            pygame.display.update()
 
 
     def run(self):
@@ -104,12 +143,13 @@ class Game:
 
             self.screen.fill(WATER_COLOUR)
             self.level.run()
+
             if self.level.sprites.check_all_enemies_health():
-
+                self.victory()
                 self.running = False
+
             if self.level.player.check_player_health():
-
-
+                self.game_over()
                 self.running = False
 
 
@@ -126,4 +166,3 @@ if __name__ == "__main__":
     game = Game()
     game.menu_screen()
     game.run()
-    game.game_over()
