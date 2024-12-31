@@ -16,7 +16,7 @@ class Button:
         self.bo_colour = bg_colour
 
         self.image = pygame.Surface((self.width, self.height))
-        self.rect = self.image.get_rect()
+        self.rect = self.image.get_rect(topleft = (self.x, self.y))
 
         self.content = self.font.render(self.text, True, self.colour)
         self.content_rect = self.content.get_rect(center = (self.width / 2, self.height / 2))

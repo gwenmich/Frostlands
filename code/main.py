@@ -22,8 +22,7 @@ class Game:
     def menu_screen(self):
         intro = True
         title = pygame.image.load("assets/logo_text.png").convert_alpha()
-        play_button = Button(200, 500, 100, 50, "white", "black", "Play", FONT_SIZE)
-
+        play_button = Button(420, 320, 100, 50, "white", "black", "Play", FONT_SIZE)
         while intro:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -39,6 +38,7 @@ class Game:
             self.screen.blit(self.menu_background, (0, 0))
             self.screen.blit(title, (260, 190))
             self.screen.blit(play_button.image, play_button.rect)
+
             self.clock.tick(FPS)
             pygame.display.update()
 
