@@ -81,8 +81,7 @@ class Level:
                                     (x, y),
                                     [self.sprites],
                                     self.obstacles,
-                                    self.draw_attack,
-                                    self.destroy_snowball)
+                                    self.draw_attack)
                             if int(column) == 230:
                                 self.enemy = Enemy(
                                     (x,y),
@@ -93,12 +92,6 @@ class Level:
 
     def draw_attack(self):
         self.snowball = Snowball(self.player, [self.sprites, self.snowball_sprites])
-
-
-    def destroy_snowball(self):
-        if self.snowball and int(time.time() - self.snowball.created_time) > self.snowball.lifespan:
-           self.snowball.kill()
-           self.snowball = None
 
 
     def player_attack_logic(self):
@@ -121,7 +114,6 @@ class Level:
         self.sprites.camera_draw(self.player)
         self.sprites.update()
         self.sprites.enemy_update(self.player)
-        self.destroy_snowball()
         self.player_attack_logic()
         self.bar.display(self.player)
 

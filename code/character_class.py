@@ -4,7 +4,7 @@ from entity import Entity
 
 class Player(Entity):
 
-    def __init__(self, position, groups, obstacles, draw_attack, destroy_snowball):
+    def __init__(self, position, groups, obstacles, draw_attack):
         super().__init__(groups)
         self.image = pygame.image.load("assets/player/down_idle.png").convert_alpha()
         self.rect = self.image.get_rect(topleft = position)
@@ -18,7 +18,6 @@ class Player(Entity):
         self.attack_cooldown = 400
         self.attack_time = None
         self.draw_attack = draw_attack
-        self.destroy_snowball = destroy_snowball
         self.attack_sound = pygame.mixer.Sound("music/snowball-hit-01-279699.mp3")
         self.attack_sound.set_volume(0.6)
 
