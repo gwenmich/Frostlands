@@ -11,39 +11,31 @@ class Game:
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Frostlands")
         self.clock = pygame.time.Clock()
-        self.game_state = "game"
+
         self.level = Level()
         self.running = True
 
     def run(self):
-        if self.game_state == "game":
-            while self.running:
+        while self.running:
 
-                for event in pygame.event.get():
-                    if event.type == pygame.QUIT:
-                        pygame.quit()
-                        sys.exit()
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
 
-                self.screen.fill(WATER_COLOUR)
-                self.level.run()
-                if self.level.sprites.check_all_enemies_health():
-                    self.game_state = "victory"
-                    self.running = False
-                if self.level.player.check_player_health():
-                    # self.running = False
-                    self.game_state = "game_over"
-                    self.running = False
-                    # pygame.display.update()
+            self.screen.fill(WATER_COLOUR)
+            self.level.run()
+            if self.level.sprites.check_all_enemies_health():
+                self.victory = VictoryScreen()
+                self.running = False
+            if self.level.player.check_player_health():
 
-                pygame.display.update()
-                self.clock.tick(FPS)
+                self.game_over = GameOverScreen()
+                self.running = False
 
-        if self.game_state == "victory":
-            self.victory = VictoryScreen()
 
-        if self.game_state == "game_over":
-            self.game_over = GameOverScreen()
-
+            pygame.display.update()
+            self.clock.tick(FPS)
 
 
 
