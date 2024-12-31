@@ -54,7 +54,7 @@ class Game:
         for line in text:
             rendered_line = self.font.render(line, True, TEXT_COLOUR)
             render_line_rect = rendered_line.get_rect(center=(WIDTH // 2, 200 + y_pos))
-            y_pos += 20
+            y_pos += 25
             self.screen.blit(rendered_line, render_line_rect)
 
 
