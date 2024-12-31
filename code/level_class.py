@@ -94,6 +94,7 @@ class Level:
     def draw_attack(self):
         self.snowball = Snowball(self.player, [self.sprites, self.snowball_sprites])
 
+
     def destroy_snowball(self):
         if self.snowball and int(time.time() - self.snowball.created_time) > self.snowball.lifespan:
            self.snowball.kill()
