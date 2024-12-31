@@ -13,9 +13,10 @@ class Button:
         self.height = height
 
         self.colour = colour
-        self.bo_colour = bg_colour
+        self.bg_colour = bg_colour
 
         self.image = pygame.Surface((self.width, self.height))
+        self.image.fill(self.bg_colour)
         self.rect = self.image.get_rect(topleft = (self.x, self.y))
 
         self.content = self.font.render(self.text, True, self.colour)

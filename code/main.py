@@ -2,7 +2,6 @@ import pygame,sys
 from settings import *
 from character_class import Player
 from level_class import Level
-from screens import VictoryScreen, GameOverScreen
 from button import Button
 
 class Game:
@@ -22,7 +21,9 @@ class Game:
     def menu_screen(self):
         intro = True
         title = pygame.image.load("assets/logo_text.png").convert_alpha()
-        play_button = Button(420, 320, 100, 50, "white", "black", "Play", FONT_SIZE)
+        play_button = Button(420, 320, 100, 50, TEXT_COLOUR, MENU_BG_COLOUR, "Play", FONT_SIZE)
+        quit_button = Button(420, 400, 100, 50, TEXT_COLOUR, MENU_BG_COLOUR, "Quit", FONT_SIZE)
+
         while intro:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -35,10 +36,13 @@ class Game:
             if play_button.is_pressed(mouse_position, mouse_pressed):
                 intro = False
 
+            if quit_button.is_pressed(mouse_position, mouse_pressed):
+                pygame.quit()
+
             self.screen.blit(self.menu_background, (0, 0))
             self.screen.blit(title, (260, 190))
             self.screen.blit(play_button.image, play_button.rect)
-
+            self.screen.blit(quit_button.image, quit_button.rect)
             self.clock.tick(FPS)
             pygame.display.update()
 
