@@ -95,8 +95,9 @@ class Game:
             "Congratulations!",
             "You have defeated all the snowmen",
             "and can finally enjoy your holiday",
-            "in peace.",
-            "Good luck!"
+            "in peace. Now you're stuck in a snowy",
+            "wasteland with nothing to do.",
+            "Guess it's time for a nap!"
         ]
 
         while win:
