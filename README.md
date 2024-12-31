@@ -1,12 +1,10 @@
 ![Frostlands](assets/logo_text.png)
 
+_Frostlands_ is a winter adventure where you arrive on an island covered in snow only 
+to find evil snowmen lurking. Your mission is to defeat the snowmen so you can finally 
+enjoy your holiday. With snowballs as your weapons you'll be able to defend yourself
+and hopefully emerge victorious!
 
-**Currently in development until 31/12**
-
-
-You just arrived at Frostlands! You were left here by your friendly tour guide but he forgot to mention there are 
-evil snowmen lurking on the island! Fortunately for you there's enough snow around to create the deadliest of weapons:
-the Snowball! Rid the lands of the snowmen so you can get to enjoy your holiday in peace.
 
 
 ### How to play:

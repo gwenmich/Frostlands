@@ -69,7 +69,10 @@ class Game:
             "deadliest of weapons:",
             "the Snowball!",
             "Rid the lands of the snowmen so you can get",
-            "to enjoy your holiday in peace."]
+            "to enjoy your holiday in peace.",
+            "",
+            "Press Enter to continue and Space to attack",
+            "Good luck!"]
 
 
         while intro:
